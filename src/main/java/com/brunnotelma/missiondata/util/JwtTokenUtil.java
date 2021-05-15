@@ -19,6 +19,7 @@ public class JwtTokenUtil implements Serializable {
 
 	private static final long serialVersionUID = -2550185165626007488L;
 
+	// Default token validity is 5 hours (60-sec * 60 = 1-hour * 5 = 5-hours)
 	public static final long JWT_TOKEN_VALIDITY = 5*60*60;
 
 	@Value("${jwt.secret}")
@@ -51,7 +52,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	private Boolean ignoreTokenExpiration(String token) {
-		// here you specify tokens, for that the expiration is ignored
+		// Specific tokens may have their expiration ignored
 		return false;
 	}
 
@@ -61,7 +62,6 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
-
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000)).signWith(SignatureAlgorithm.HS512, secret).compact();
 	}

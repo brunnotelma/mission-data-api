@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.brunnotelma.missiondata.util.JwtTokenUtil;
 import com.brunnotelma.missiondata.model.JwtRequest;
-import com.brunnotelma.missiondata.model.JwtResponse;
+import com.brunnotelma.missiondata.model.JwtToken;
 
 @RestController
 @CrossOrigin
@@ -36,15 +36,12 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
 			throws Exception {
-
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getEmail());
-
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtToken(token));
 	}
 
 	private void authenticate(String email, String password) throws Exception {
