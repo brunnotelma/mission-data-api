@@ -4,6 +4,10 @@ A Restful API to provide data for the Mission App.
 
 ### What needs to be done?
 
+- Implement OAuth Authentication & Security
+- Implement user levels
+- Implement other API endpoints
+
 ### How to use?
 
 First, run the database using Docker. For this, you will need Docker and docker-compose installed in your machine.
